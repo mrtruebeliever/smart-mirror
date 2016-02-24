@@ -91,6 +91,7 @@
 			// List commands
             AnnyangService.addCommand('Wat kan ik zeggen', function() {
                 console.debug("Hier een lijst van commandos...");
+				responsiveVoice.speak("Hier is een lijst van wat je kan vragen ");
                 console.log(AnnyangService.commands);
                 $scope.focus = "commands";
             });
@@ -106,6 +107,7 @@
 
             // Go back to default view
             AnnyangService.addCommand('Wordt wakker', function() {
+				responsiveVoice.speak("Hallo waarmee kan ik je helpen?");
 				$scope.focus = "default";
 			});
 
@@ -128,6 +130,7 @@
             // Hide everything and "sleep"
             AnnyangService.addCommand('Toon (mij) een kaart van *location', function(location) {
                 console.debug("Haalt kaart op van ", location);
+				responsiveVoice.speak("Ik haal de map op van " + location);
                 $scope.map = MapService.generateMap(location);
                 $scope.focus = "map";
             });
@@ -162,6 +165,7 @@
              // Change name
             AnnyangService.addCommand('Mijn naam is *name', function(name) {
                 console.debug("Hey ", name, " leuk je te ontmoeten");
+				responsiveVoice.speak("Hallo " + name + " je ziet er goed uit");
 				$scope.user.name = name;
             });
 
@@ -178,6 +182,7 @@
             // Check the time
             AnnyangService.addCommand('Hoe laat is het', function(task) {
                  console.debug("Het is", moment().format('H [uur] m'));
+				 responsiveVoice.speak("Het is " + moment().format('H [uur] m'));
                  _this.clearResults();
             });
 
