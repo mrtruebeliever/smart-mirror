@@ -9,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/locale/nl.js"></script>
+	<script src="https://code.angularjs.org/1.2.5/i18n/angular-locale_nl-nl.js"></script>
     <!-- App -->
     <script src="config.js"></script>
     <script src="js/rrule.js"></script>
@@ -33,14 +35,14 @@
   <body ng-controller="MirrorCtrl as commands">
     <div class="top">
       <div class="top-left">
-        <div class="date grey">{{date | date : 'EEEE, MMMM d yyyy'}}</div>
-        <div class="time">{{date | date : 'hh:mm a'}}</div>
+        <div class="date grey">{{date | date : 'EEEE d MMMM  yyyy'}}</div>
+        <div class="time">{{date | date : 'HH:mm'}}</div>
         <ul class="calendar fade" ng-show="focus == 'default'">
             <li class="event" ng-repeat="event in calendar">
                 <div class="event-details">
                     <span class="day">{{event.start.format('dddd') | uppercase}}</span>
                     <span class="summary">{{event.SUMMARY}}</span>
-                    <div class="details">{{event.start.format('MMMM Do YYYY, h:mm:ss a')}}</div>
+                    <div class="details">{{event.start.format('DD MMMM YYYY, HH:mm:ss')}}</div>
                     </li>
                 </div>
         </ul>
@@ -49,7 +51,7 @@
         <div class="weather">
           <div class="weather-today">
             <span class="icon dimmed wi {{currentForcast.wi}}"></span>
-            <span class="tempreture">{{currentForcast.temperature}}&deg;</span>
+            <span class="tempreture">{{currentForcast.temperature | number:1}}&deg;C</span>
           </div>
           <div class="weather-week-descriptor">
             <span>{{hourlyForcast.summary}}</span>
@@ -59,16 +61,16 @@
             <div class="weather-week-day">
               <span class="day light-grey">{{forcast.day}}</span>
               <span class="icon-small dimmed wi {{forcast.wi}}"></span>
-              <span class="tempreture tempreture-min">{{forcast.temperatureMin}}&deg;</span>
-              <span class="tempreture tempreture-max">{{forcast.temperatureMax}}&deg;</span>
+              <span class="tempreture tempreture-min">{{forcast.temperatureMin | number:1}}&deg;</span>
+              <span class="tempreture tempreture-max">{{forcast.temperatureMax | number:1}}&deg;</span>
             </div>
           </div>
         </div>
         <div class="traffic">
           <div ng-show="!traffic.error" class="traffic-information">
-            <span class="time-to">Time to {{traffic.destination}}:</span>
-            <span ng-show="traffic.hours > 0">{{traffic.hours}} hours and</span>
-            <span>{{traffic.minutes}} minutes</span>
+            <span class="time-to">Tijd naar {{traffic.destination}}:</span>
+            <span ng-show="traffic.hours > 0">{{traffic.hours}} uur en</span>
+            <span>{{traffic.minutes}} minuten</span>
           </div>
         </div>
       </div>
@@ -91,31 +93,31 @@
       <div class="bottom-center">
         <!-- Command list -->
         <div class="commands animate-grow" ng-show="focus == 'commands'">
-          <h2>Available Commands</h2>
+          <h2>Beschikbare commando's</h2>
           <dl>
-            <dt>What can I say?</dt>
-            <dd>Shows a list of voice commands available to you.</dd>
-            <dt>Go home</dt>
-            <dd>Takes you back to the home screen</dd>
-            <dt>Show me ________</dt>
-            <dd>Will show you pictures of the requested item.</dd>
-            <dt>Remind me to ________</dt>
-            <dd>Add something to the reminders list.</dd>
-            <dt>Clear reminders</dt>
-            <dd>Clears out your reminders list.</dd>
-            <dt>Show map</dt>
-            <dd>Shows a map of your current city.</dd>
-            <dt>Show map of ________</dt>
-            <dd>Shows a map of the given location.</dd>
+            <dt>Wat kan ik zeggen?</dt>
+            <dd>Toont een lijst met beschikbare commando's.</dd>
+            <dt>Beginscherm</dt>
+            <dd>Brengt je terug naar het beginscherm.</dd>
+            <dt>Toon me ________</dt>
+            <dd>Toont afbeeldingen van het gevraagde item.</dd>
+            <dt>Herinner mij om ________</dt>
+            <dd>Voeg iets toe aan todo lijst.</dd>
+            <dt>Wis todo lijst</dt>
+            <dd>Wist alles op de todo lijst.</dd>
+            <dt>Toon map</dt>
+            <dd>Toont map van huidige stad.</dd>
+            <dt>Toon map van ________</dt>
+            <dd>Toont map van opgegeven locatie.</dd>
             <dt>Giphy ________</dt>
-            <dd>Shows a giphy image </dd>
-            <dt>Show xkcd</dt>
-            <dd>Shows the most recent xkcd comic.</dd>
+            <dd>Toont een giphy image </dd>
+            <dt>Toon xkcd</dt>
+            <dd>Toont meest recente xkcd comic.</dd>
           </dl>
           <small>
-            We are using node <script>document.write(process.versions.node)</script>,
+            We gebruiken node <script>document.write(process.versions.node)</script>,
             Chrome <script>document.write(process.versions.chrome)</script>,
-            and Electron <script>document.write(process.versions.electron)</script>.
+            en Electron <script>document.write(process.versions.electron)</script>.
           </small>
         </div>
 
@@ -130,14 +132,14 @@
       <!--<button ng-click="debug = true">Open Debug</button>-->
     </div>
     <div class="debug-info" ng-show="debug == true">
-      <button ng-click="focus = (focus == 'map')?'default':'map'">Map</button>
-      <button ng-click="focus = (focus == 'colors')?'default':'colors'">Colors</button>
-      <button ng-click="focus = (focus == 'commands')?'default':'commands'">Commands</button>
+      <button ng-click="focus = (focus == 'map')?'default':'map'">Kaart</button>
+      <button ng-click="focus = (focus == 'colors')?'default':'colors'">Kleuren</button>
+      <button ng-click="focus = (focus == 'commands')?'default':'commands'">Commando's</button>
       <button ng-click="focus = (focus == 'gif')?'default':'gif'">Gif</button>
-      <button ng-click="debug = false">Close Debug</button>
+      <button ng-click="debug = false">Sluit Debug</button>
       <!-- Has results -->
       <div ng-show="commands.results.length > 0">
-        <button class="btn btn-default" ng-click="commands.clearResults()">Clear</button>
+        <button class="btn btn-default" ng-click="commands.clearResults()">Wis</button>
         <hr/>
         <ul class="list-group">
           <li class="list-group-item" ng-repeat="result in commands.results">
