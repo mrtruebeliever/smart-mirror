@@ -102,11 +102,13 @@
             // Hide everything and "sleep"
             AnnyangService.addCommand('Ga slapen', function() {
                 console.debug("Ok, going to sleep...");
+				exec("/opt/vc/bin/tvservice -p && /opt/vc/bin/tvservice -o", puts);
                 $scope.focus = "sleep";
             });
 
             // Go back to default view
             AnnyangService.addCommand('Wordt wakker', function() {
+				exec("/opt/vc/bin/tvservice -p && chvt 1 && chvt 7", puts);
 				responsiveVoice.speak("Hallo waarmee kan ik je helpen?");
 				$scope.focus = "default";
 			});
